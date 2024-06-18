@@ -1,0 +1,8 @@
+<h1>{{ pageTitle }}</h1>
+<button [disabled]="btnStatus">Click</button>
+
+<button (click)="chageTitle()">Change Title</button>
+<br><br>
+<input type="text" [(ngModel)]="username">
+<br>
+<h4>Welcome {{ username }}</h4>
