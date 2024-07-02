@@ -7,7 +7,7 @@ import { PostComponent } from './containers/post/post.component';
 const routes: Routes = [{
   path: '', component: DashboardComponent,
   children: [
-    {path: 'users', component: UsersComponent},
+    {path: '', component: UsersComponent},
     {path: 'post', component: PostComponent},
   ]
 }];

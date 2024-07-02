@@ -5,7 +5,6 @@ import { Component } from "@angular/core";
     template: `
         <youtube-header></youtube-header>
         <router-outlet></router-outlet>
-        <!-- footer -->
     `,
     styles: ['']
 })
