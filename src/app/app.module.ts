@@ -15,6 +15,7 @@ import { UserCardComponent } from './components/user-card.component';
 import { UserListComponent } from './components/user-list.component';
 import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FlexLayoutModule,
     FlexModule,
     HttpClientModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [HttpService, ApiService],
   bootstrap: [AppComponent]
