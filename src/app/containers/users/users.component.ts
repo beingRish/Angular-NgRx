@@ -23,7 +23,9 @@ export class UsersComponent implements OnInit{
 
   fetchData(){
     this.apiService.getAllPost().subscribe(data => {
-      this.users = data;
+      this.users = data; 
+      console.log('fetchData',this.users);
+           
     });
   }
 }

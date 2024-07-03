@@ -5,7 +5,7 @@ import { Component } from "@angular/core";
     template: `
     <youtube-layout></youtube-layout>
 `,
-    styles: ['']
+    styles: [``]
 })
 
 export class DashboardComponent{

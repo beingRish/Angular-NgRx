@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
+import {catchError} from 'rxjs/operators';
 import { Injectable } from "@angular/core";
-import { Observable, catchError, throwError } from "rxjs";
+import { Observable, throwError } from "rxjs";
 
 @Injectable()
 
@@ -14,7 +15,7 @@ export class HttpService {
     get(url: string, params?: any) : Observable<any> {
         const data = { params, headers: this.getAuthHeader() };
         return this.httpClient
-            .get(this.baseUrl + url, data).pipe(catchError(this.errorHandler.bind))
+            .get(this.baseUrl + url, data).pipe(catchError(this.errorHandler.bind(this)))
     }
 
     private errorHandler(response: any) {
@@ -44,7 +45,7 @@ export class HttpService {
     private getAuthHeader(): { [header: string]: string | string[]; } {
         return {
             Authorization: `Bearer ${localStorage.getItem(this.AUTH_TOKEN)}`
-        }
+        };
     }
 
 }
