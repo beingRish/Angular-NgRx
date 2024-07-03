@@ -1,12 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/user';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-users',
   template: `
-    <h1>I am user component</h1>
+    <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="30px">
+      <youtube-user-list [users]="this.users"></youtube-user-list>
+    </div>
   `,
   styles: ['']
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit{
 
+  users: User[] = [];
+
+  constructor(private apiService: ApiService){}
+
+  ngOnInit(){
+    this.fetchData();
+  }
+
+  fetchData(){
+    this.apiService.getAllPost().subscribe(data => {
+      this.users = data;
+    });
+  }
 }
