@@ -10,7 +10,7 @@ export class UserListRequestAction {
 export class UserListSuccessAction {
     readonly type = USER_LIST_SUCCESS;    
 
-    constructor(payload?: {data: User[]}) {
+    constructor(public payload?: {data: User[]}) {
         
     }
 }

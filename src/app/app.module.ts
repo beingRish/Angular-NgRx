@@ -16,6 +16,7 @@ import { UserListComponent } from './components/user-list.component';
 import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { rootReducer } from '../reducers';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { StoreModule } from '@ngrx/store';
     FlexLayoutModule,
     FlexModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(rootReducer),
   ],
   providers: [HttpService, ApiService],
   bootstrap: [AppComponent]
