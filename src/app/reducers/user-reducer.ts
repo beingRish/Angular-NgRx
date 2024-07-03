@@ -1,6 +1,6 @@
-import { USER_LIST_REQUEST, USER_LIST_SUCCESS } from "src/actions/user-action";
+import { USER_LIST_REQUEST, USER_LIST_SUCCESS } from "src/app/actions/user-action";
 import { Action } from "../actions";
-import { User } from "../app/models/user";
+import { User } from "../models/user";
 
 
 export interface UserReducerState{

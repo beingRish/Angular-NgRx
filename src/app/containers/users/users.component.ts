@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
-import { UserListRequestAction, UserListSuccessAction } from 'src/actions/user-action';
+import { UserListRequestAction, UserListSuccessAction } from 'src/app/actions/user-action';
 import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
-import { RootReducerState, getUserLoaded, getUserLoading, getUsers } from 'src/reducers';
+import { RootReducerState, getUserLoaded, getUserLoading, getUsers } from 'src/app/reducers';
 
 @Component({
   selector: 'app-users',
@@ -42,3 +42,7 @@ export class UsersComponent implements OnInit{
     })
   }
 }
+
+// reducer -> it contain a state (global state)
+// it will take an action -> it will return a new state
+// action -> it will contain a payload and type.

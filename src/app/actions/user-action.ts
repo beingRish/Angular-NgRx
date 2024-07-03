@@ -1,4 +1,4 @@
-import { User } from "../app/models/user";
+import { User } from "../models/user";
 
 export const USER_LIST_REQUEST = 'user list request';
 export const USER_LIST_SUCCESS = 'user list success';
