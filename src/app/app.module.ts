@@ -17,6 +17,7 @@ import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { rootReducer } from './reducers';
+import { YoutubeRepository } from './services/youtube-repository';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,11 @@ import { rootReducer } from './reducers';
     HttpClientModule,
     StoreModule.forRoot(rootReducer),
   ],
-  providers: [HttpService, ApiService],
+  providers: [
+    HttpService,
+    ApiService,
+    YoutubeRepository,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
