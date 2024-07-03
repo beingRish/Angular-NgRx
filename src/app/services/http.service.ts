@@ -36,6 +36,8 @@ export class HttpService {
             // this will occur when not connected to internet
         }else{
             message = key + ' : ' + message;
+            console.log(message);
+            
         }
 
         // call snackbar and show error with message

@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { RootReducerState, getUserLoaded, getUserLoading, getUsers } from "../reducers";
+import { RootReducerState, getUserError, getUserLoaded, getUserLoading, getUsers } from "../reducers";
 import { Store } from "@ngrx/store";
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, take } from 'rxjs';
 import { ApiService } from "./api.service";
-import { UserListRequestAction, UserListSuccessAction } from "../actions/user-action";
+import { UserListErrorAction, UserListRequestAction, UserListSuccessAction } from "../actions/user-action";
 import { User } from "../models/user";
 
 @Injectable()
@@ -11,18 +11,21 @@ import { User } from "../models/user";
 export class YoutubeRepository {
     constructor(private apiService: ApiService, private store: Store<RootReducerState>) { }
 
-    getUserList(force = false): [Observable<boolean>, Observable<User[]>] {
+    getUserList(force = false): [Observable<boolean>, Observable<User[]>, Observable<boolean>] {
         const loading$ = this.store.select(getUserLoading);
         const loaded$ = this.store.select(getUserLoaded);
-        const getUserData = this.store.select(getUsers);
-        combineLatest([loaded$, loading$]).subscribe((data) => {
+        const getUserData$ = this.store.select(getUsers);
+        const getError$ = this.store.select(getUserError);
+        combineLatest([loaded$, loading$]).pipe(take(1)).subscribe((data) => {
             if (!data[0] && !data[1] || force) {
                 this.store.dispatch(new UserListRequestAction());
                 this.apiService.getAllPost().subscribe(res => {
                     this.store.dispatch(new UserListSuccessAction({ data: res }));
+                }, error => {
+                    this.store.dispatch(new UserListErrorAction());
                 });
             }
         });
-        return [loading$, getUserData];
+        return [loading$, getUserData$, getError$];
     }
 }

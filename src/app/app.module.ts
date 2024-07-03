@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { rootReducer } from './reducers';
 import { YoutubeRepository } from './services/youtube-repository';
+import { errorComponent } from './components/error.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { YoutubeRepository } from './services/youtube-repository';
     PostComponent,
     UsersComponent,
     UserCardComponent,
-    UserListComponent
+    UserListComponent,
+    errorComponent
   ],
   imports: [
     BrowserModule,

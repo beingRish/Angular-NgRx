@@ -7,7 +7,9 @@ import { YoutubeRepository } from 'src/app/services/youtube-repository';
   selector: 'app-users',
   template: `
     <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="30px">
-      <youtube-user-list [users]="this.users"></youtube-user-list>
+      <youtube-user-list *ngIf="!this.loading && !this.error" [users]="this.users"></youtube-user-list>
+      <mat-spinner *ngIf="this.loading" style="padding-top: 5px;"></mat-spinner>
+      <youtube-error (reload)="this.tryAgain()" *ngIf="this.error && !loading"></youtube-error>
     </div>
   `,
   styles: ['']
@@ -15,6 +17,8 @@ import { YoutubeRepository } from 'src/app/services/youtube-repository';
 export class UsersComponent implements OnInit{
 
   users: User[] = [];
+  loading = false;
+  error = false;
 
   constructor(private youtubeRepository: YoutubeRepository){}
 
@@ -23,10 +27,27 @@ export class UsersComponent implements OnInit{
   }
 
   fetchData(){
-    const userData$ = this.youtubeRepository.getUserList()[1];
+    const Observer$ = this.youtubeRepository.getUserList()
+    const loading$ = Observer$[0];
+    const userData$ = Observer$[1];
+    const error$ = Observer$[2];
     userData$.subscribe(data => {
       this.users = data;
-    })
+      console.log('fetchData : userData$ : ', data);
+      
+    });
+    loading$.subscribe(data => {
+      this.loading = data;
+    });
+    error$.subscribe(data => {
+      this.error = data;
+    });
+  }
+
+  tryAgain(){
+    this.youtubeRepository.getUserList(true);
+    console.log('trying');
+    
   }
 }
 
