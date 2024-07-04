@@ -8,7 +8,7 @@ import { YoutubeRepository } from "../services/youtube-repository";
 @Component({
     selector: 'youtube-update-user',
     template: `
-        <form [formGroup]="userForm" (ngSubmit)="this.userForm.valid && this.updateUser()">
+        <form [formGroup]="userForm" (ngSubmit)="this.userForm.valid && this.addOrUpdateUser()">
         <div fxLayout="column" fxLayoutAlign="center stretch">
             <mat-form-field>
                 <input formControlName="email" matInput placeholder="Email"/>
@@ -18,7 +18,7 @@ import { YoutubeRepository } from "../services/youtube-repository";
                 <input formControlName="name" matInput placeholder="Username"/>
                 <mat-error>Name is required</mat-error>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="submit">Update</button>
+            <button mat-raised-button color="primary" type="submit">{{this.data ? 'Update' : 'Add'}}</button>
         </div>
     </form>
 
@@ -37,16 +37,29 @@ export class updateUserComponent implements OnInit{
 
     ngOnInit(): void {
         this.userForm = new FormGroup({
-            name: new FormControl(this.data.name ? this.data.name : null, [Validators.required]),
-            email: new FormControl(this.data.email ? this.data.email : null, [Validators.required]),
+            name: new FormControl(this.data ? this.data.name : null, [Validators.required]),
+            email: new FormControl(this.data ? this.data.email : null, [Validators.required]),
         });
+    }
+
+    addOrUpdateUser(){
+        if(this.data){
+            this.updateUser();
+        } else{
+            this.addUser();
+        }
     }
 
     updateUser(){
         const updatedUser = {...this.data,...this.userForm.value};
         console.log('updateUser: updatedUser: ', updatedUser);
         
-        // this.youtubeRepo.updateUser(updatedUser);
-        // this.dialogRef.close();
+        this.youtubeRepo.updateUser(updatedUser);
+        this.dialogRef.close();
+    }
+
+    addUser(){
+        this.youtubeRepo.addUser(this.userForm.value);
+        this.dialogRef.close();
     }
 }

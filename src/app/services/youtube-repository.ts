@@ -3,7 +3,7 @@ import { RootReducerState, getUserError, getUserLoaded, getUserLoading, getUsers
 import { Store } from "@ngrx/store";
 import { Observable, combineLatest, take } from 'rxjs';
 import { ApiService } from "./api.service";
-import { UserDeleteAction, UserListErrorAction, UserListRequestAction, UserListSuccessAction, UserUpdateAction } from "../actions/user-action";
+import { UserAddAction, UserDeleteAction, UserListErrorAction, UserListRequestAction, UserListSuccessAction, UserUpdateAction } from "../actions/user-action";
 import { User } from "../models/user";
 
 @Injectable()
@@ -37,6 +37,10 @@ export class YoutubeRepository {
     updateUser(data: User) {
         // first send details to actual api
         this.store.dispatch(new UserUpdateAction({data}));
+    }
 
+    addUser(data: User){
+        // first call api to add a user and then update it in store
+        this.store.dispatch(new UserAddAction({data}));
     }
 }

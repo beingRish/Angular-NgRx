@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { takeWhile } from 'rxjs';
+import { updateUserComponent } from 'src/app/components/update-user.component';
 import { User } from 'src/app/models/user';
 import { YoutubeRepository } from 'src/app/services/youtube-repository';
 
@@ -10,20 +13,29 @@ import { YoutubeRepository } from 'src/app/services/youtube-repository';
       <youtube-user-list *ngIf="!this.loading && !this.error" [users]="this.users"></youtube-user-list>
       <mat-spinner *ngIf="this.loading" style="padding-top: 5px;"></mat-spinner>
       <youtube-error (reload)="this.tryAgain()" *ngIf="this.error && !loading"></youtube-error>
+      <button *ngIf="!this.loading && !this.error" (click)="addUser()" mat-raised-button color="primary">Add User</button>
     </div>
   `,
   styles: ['']
 })
-export class UsersComponent implements OnInit{
+export class UsersComponent implements OnInit, OnDestroy{
 
   users: User[] = [];
   loading = false;
   error = false;
+  isAlive = true;
 
-  constructor(private youtubeRepository: YoutubeRepository){}
+  constructor(
+    private youtubeRepository: YoutubeRepository,
+    private dialog: MatDialog
+  ){}
 
   ngOnInit(){
     this.fetchData();
+  }
+
+  ngOnDestroy(): void {
+      this.isAlive = false;
   }
 
   fetchData(){
@@ -31,15 +43,15 @@ export class UsersComponent implements OnInit{
     const loading$ = Observer$[0];
     const userData$ = Observer$[1];
     const error$ = Observer$[2];
-    userData$.subscribe(data => {
+    userData$.pipe(takeWhile(()=> this.isAlive)).subscribe(data => {
       this.users = data;
       console.log('fetchData : userData$ : ', data);
       
     });
-    loading$.subscribe(data => {
+    loading$.pipe(takeWhile(()=> this.isAlive)).subscribe(data => {
       this.loading = data;
     });
-    error$.subscribe(data => {
+    error$.pipe(takeWhile(()=> this.isAlive)).subscribe(data => {
       this.error = data;
     });
   }
@@ -48,6 +60,12 @@ export class UsersComponent implements OnInit{
     this.youtubeRepository.getUserList(true);
     console.log('trying');
     
+  }
+
+  addUser(){
+    this.dialog.open(updateUserComponent,{
+      width: '256px'
+    })
   }
 }
 
