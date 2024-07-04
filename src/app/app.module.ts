@@ -20,6 +20,8 @@ import { rootReducer } from './reducers';
 import { YoutubeRepository } from './services/youtube-repository';
 import { errorComponent } from './components/error.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { updateUserComponent } from './components/update-user.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     UsersComponent,
     UserCardComponent,
     UserListComponent,
-    errorComponent
+    errorComponent,
+    updateUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     MaterialModule,
     FlexLayoutModule,
     FlexModule,
+    ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forRoot(rootReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
