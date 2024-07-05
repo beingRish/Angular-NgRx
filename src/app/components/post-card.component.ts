@@ -14,7 +14,7 @@ import { updateCommentComponent } from "./update-comment.component";
                     <p>
                         {{comment.description}}
                     </p>
-                    <button (click)="editComment()" mat-button color="accent">Edit</button>
+                    <button (click)="editComment(comment)" mat-button color="accent">Edit</button>
                     <button (click)="deleteComment(comment.id)" mat-button color="warn">Delete</button>
                 </div>
                 <div fxFlex="row" fxLayoutGap="30px">
@@ -38,7 +38,6 @@ import { updateCommentComponent } from "./update-comment.component";
 export class PostCardComponent {
 
     @Input() post!: Post;
-    comment!: Comment
     commentDescription = '';
 
     constructor(
@@ -60,7 +59,9 @@ export class PostCardComponent {
         this.youtubeRepo.deleteComment(id, this.post.id);
     }
 
-    editComment(){
-        this.diloge.open(updateCommentComponent, {data: this.post});
+    editComment(comment: Comment){
+        this.diloge.open(updateCommentComponent, {
+            data: {post: this.post, comment, description: comment.description}
+        });
     }
 }
