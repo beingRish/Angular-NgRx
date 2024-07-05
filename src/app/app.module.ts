@@ -22,6 +22,8 @@ import { errorComponent } from './components/error.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { updateUserComponent } from './components/update-user.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PostListComponent } from './components/post-list.component';
+import { PostCardComponent } from './components/post-card.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserListComponent,
     errorComponent,
     updateUserComponent,
+    PostListComponent,
+    PostCardComponent
   ],
   imports: [
     BrowserModule,

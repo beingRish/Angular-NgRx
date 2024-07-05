@@ -1,10 +1,37 @@
 import { Injectable } from "@angular/core";
-import { RootReducerState, getUserById, getUserError, getUserLoaded, getUserLoading, getUsers } from "../reducers";
 import { Store } from "@ngrx/store";
+import { User } from "../models/user";
+import { Post } from "../models/post";
 import { Observable, combineLatest, take } from 'rxjs';
 import { ApiService } from "./api.service";
-import { UserAddAction, UserDeleteAction, UserListErrorAction, UserListRequestAction, UserListSuccessAction, UserUpdateAction } from "../actions/user-action";
-import { User } from "../models/user";
+import { 
+    RootReducerState, 
+    getUserById, 
+    getUserError, 
+    getUserLoaded, 
+    getUserLoading, 
+    getUsers,
+    getPostError, 
+    getPostLoaded, 
+    getPostLoading, 
+    getPosts
+} from "../reducers";
+
+import { 
+    UserAddAction, 
+    UserDeleteAction, 
+    UserListErrorAction, 
+    UserListRequestAction, 
+    UserListSuccessAction, 
+    UserUpdateAction 
+} from "../actions/user-action";
+import { 
+    PostListErrorAction, 
+    PostListRequestAction, 
+    PostListSuccessAction 
+} from "../actions/post-action";
+
+
 
 @Injectable()
 
@@ -57,5 +84,23 @@ export class YoutubeRepository {
             return res;
         });
         return user$;
+    }
+
+    getAllPost(force = false): [Observable<boolean>, Observable<Post[]>, Observable<boolean>] {
+        const post$ = this.store.select(getPosts);
+        const loaded$ = this.store.select(getPostLoading);
+        const loading$ = this.store.select(getPostLoaded);
+        const getError$ = this.store.select(getPostError);
+        combineLatest([loaded$, loading$]).pipe(take(1)).subscribe((data) => {
+            if ((!data[0] && !data[1]) || force) {
+              this.store.dispatch(new PostListRequestAction());
+              this.apiService.getAllPost().subscribe(res => {
+                this.store.dispatch(new PostListSuccessAction({data: res}));
+              }, error => {
+                this.store.dispatch(new PostListErrorAction());
+              });
+            }
+          });
+          return [loading$, post$, getError$];
     }
 }

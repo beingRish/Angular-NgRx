@@ -26,7 +26,7 @@ export class UsersComponent implements OnInit, OnDestroy{
   isAlive = true;
 
   constructor(
-    private youtubeRepository: YoutubeRepository,
+    private youtubeRepo: YoutubeRepository,
     private dialog: MatDialog
   ){}
 
@@ -39,7 +39,7 @@ export class UsersComponent implements OnInit, OnDestroy{
   }
 
   fetchData(){
-    const Observer$ = this.youtubeRepository.getUserList()
+    const Observer$ = this.youtubeRepo.getUserList()
     const loading$ = Observer$[0];
     const userData$ = Observer$[1];
     const error$ = Observer$[2];
@@ -57,7 +57,7 @@ export class UsersComponent implements OnInit, OnDestroy{
   }
 
   tryAgain(){
-    this.youtubeRepository.getUserList(true);
+    this.youtubeRepo.getUserList(true);
     console.log('trying');
     
   }

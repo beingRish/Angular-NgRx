@@ -8,16 +8,21 @@ import { Router } from "@angular/router";
 @Component({
     selector: 'youtube-user-card',
     template: `
-        <mat-card (click)="open()" style="margin-top: 10px; margin-bottom: 10px" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start stretch">
-            <mat-card-title style="padding: 10px;">{{this.user.name}}</mat-card-title>
+        <mat-card (click)="open()" fxLayout="column" fxLayoutGap="30px" fxLayoutAlign="start stretch">
+            <mat-card-title>{{this.user.name}}</mat-card-title>
             <mat-card-content>{{this.user.email}}</mat-card-content>
-            <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center stretch">
+            <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center stretch">
                 <button (click)="delete()" mat-raised-button color="warn">Delete</button>
                 <button (click)="update()" mat-raised-button color="primary">Update</button>
             </div>
         </mat-card>
     `,
-    styles: ['']
+    styles: [`
+        mat-card{
+            padding: 20px;
+            margin: 10px;
+        }
+    `]
 })
 
 export class UserCardComponent{

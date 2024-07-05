@@ -9,7 +9,7 @@ import { YoutubeRepository } from "../services/youtube-repository";
     selector: 'youtube-update-user',
     template: `
         <form [formGroup]="userForm" (ngSubmit)="this.userForm.valid && this.addOrUpdateUser()">
-        <div fxLayout="column" fxLayoutAlign="center stretch">
+        <div fxLayout="column" fxLayoutGap="0px" fxLayoutAlign="center stretch">
             <mat-form-field>
                 <input formControlName="email" matInput placeholder="Email"/>
                 <mat-error>Valid email is required</mat-error>
@@ -23,7 +23,11 @@ import { YoutubeRepository } from "../services/youtube-repository";
     </form>
 
     `,
-    styles: [``]
+    styles: [`
+        mat-form-field{
+            margin: 10px;
+        }
+    `]
 })
 
 export class updateUserComponent implements OnInit{
