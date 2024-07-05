@@ -11,9 +11,13 @@ export class ApiService {
 
     }
 
-    getAllPost() : Observable<User[]>{
+    getAllUser() : Observable<User[]>{
         return this.httpService.get('/users')
             .pipe(map(data => data as User[]));
+    }
+
+    getUser(id: number): Observable<User> {
+        return this.httpService.get('/user/' + id)
     }
 
 }

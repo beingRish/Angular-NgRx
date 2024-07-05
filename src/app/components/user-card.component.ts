@@ -3,11 +3,12 @@ import { User } from "../models/user";
 import { YoutubeRepository } from "../services/youtube-repository";
 import { MatDialog } from "@angular/material/dialog";
 import { updateUserComponent } from "./update-user.component";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'youtube-user-card',
     template: `
-        <mat-card style="margin-top: 10px; margin-bottom: 10px" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start stretch">
+        <mat-card (click)="open()" style="margin-top: 10px; margin-bottom: 10px" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start stretch">
             <mat-card-title style="padding: 10px;">{{this.user.name}}</mat-card-title>
             <mat-card-content>{{this.user.email}}</mat-card-content>
             <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center stretch">
@@ -24,12 +25,13 @@ export class UserCardComponent{
     @Input() user!: User;
 
     constructor(
-        private youtubeRepository: YoutubeRepository,
-        private dialog: MatDialog
+        private youtubeRepo: YoutubeRepository,
+        private dialog: MatDialog,
+        private router: Router
         ){}
 
     delete(){
-        this.youtubeRepository.deleteUser(this.user.id)
+        this.youtubeRepo.deleteUser(this.user.id)
     }
 
     update(){
@@ -37,5 +39,9 @@ export class UserCardComponent{
             width: '256px',
             data: this.user
         })
+    }
+
+    open(){
+        this.router.navigate(['user', this.user.id]);
     }
 }
