@@ -21,9 +21,10 @@ import { YoutubeRepository } from './services/youtube-repository';
 import { errorComponent } from './components/error.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { updateUserComponent } from './components/update-user.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PostListComponent } from './components/post-list.component';
 import { PostCardComponent } from './components/post-card.component';
+import { updateCommentComponent } from './components/update-comment.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PostCardComponent } from './components/post-card.component';
     errorComponent,
     updateUserComponent,
     PostListComponent,
-    PostCardComponent
+    PostCardComponent,
+    updateCommentComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,7 @@ import { PostCardComponent } from './components/post-card.component';
     FlexModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
     StoreModule.forRoot(rootReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { User } from "../models/user";
-import { Post } from "../models/post";
+import { Post, Comment } from "../models/post";
 import { Observable, combineLatest, take } from 'rxjs';
 import { ApiService } from "./api.service";
 import { 
@@ -26,6 +26,9 @@ import {
     UserUpdateAction 
 } from "../actions/user-action";
 import { 
+    CommentAddAction,
+    CommentDeleteAction,
+    CommentUpdateAction,
     PostListErrorAction, 
     PostListRequestAction, 
     PostListSuccessAction 
@@ -102,5 +105,17 @@ export class YoutubeRepository {
             }
           });
           return [loading$, post$, getError$];
+    }
+
+    addComment(comment: Comment, postId: number) {
+        this.store.dispatch(new CommentAddAction({data: comment, postId: postId}))
+    }
+
+    updateComment(comment: Comment, postId: number) {
+        this.store.dispatch(new CommentUpdateAction({data: comment, postId: postId}))
+    }
+
+    deleteComment(commentId: number, postId: number) {
+        this.store.dispatch(new CommentDeleteAction({id: commentId, postId}))
     }
 }
